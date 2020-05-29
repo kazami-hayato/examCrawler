@@ -28,27 +28,31 @@ function createWindow() {
     mainWindow.webContents.openDevTools()
 
     let tableData = [{
-        username: '1842000000000',
-        password: '19830709'
-    }, {
-        username: '1842000000000',
-        password: '19830709'
-    }, {
-        username: '1842000000000',
-        password: '19830709'
-    }, {
-        username: '1842000000000',
-        password: '19830709'
-    },
+        username: '1942001256854',
+        password: '19760720'
+    }
     ]
     mainWindow.webContents.on('dom-ready', () => {
         mainWindow.webContents.send('ping', tableData)
     })
-    ipcMain.on('ping', (event, arg) => {
-        console.log(arg) // prints "ping"
-        event.returnValue = 'pong'
-        view.webContents.executeJavaScript("window.location.href='http://passport.ouchn.cn/Account/Login'").then(()=>{})
-        //view.webContents.loadURL("http://passport.ouchn.cn/Account/Login").then(()=>{})
+    ipcMain.on('ping', (event, user) => {
+        console.log(user) // prints "ping"
+        console.log(user.username)
+        let setUsername=`document.getElementById("username").value="${user.username}"`
+        let setPassword=`document.getElementById("password").value="${user.password}"`
+        view.webContents.executeJavaScript(setUsername+";"
+                            +setPassword+";"
+            + "document.getElementsByName('button')[0].click()"+";"
+            +  "window.location.href='http://student.ouchn.cn/#/home'"
+        ).then(()=>{console.log("exe")})
+        setTimeout(()=>{
+        view.webContents.executeJavaScript("window.location.href='http://student.ouchn.cn/#/home'")
+            .then(()=>{})}
+        ,2000)
+        // view.webContents.executeJavaScript("" +
+        //     "document.getElementById('password').value='${}'" +
+        //     "window.location.href='http://passport.ouchn.cn/Account/Login'").then(()=>{})
+
     })
 }
 
