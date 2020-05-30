@@ -12,45 +12,54 @@
 
 
 <div id="app">
-    <div id="container" >
-        <template>
-            <el-table
-                    :data="tableData"
-                    style="width: 65%"
-                    max-height="250"
-                >
-                <el-table-column
-                        label="用户名"
-                        width="180">
-                    <template slot-scope="scope">
-                        <i class="el-icon-user"></i>
-                        <span style="margin-left: 10px">{{ scope.row.username }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        label="密码"
-                        width="180">
-                    <template slot-scope="scope">
-                        <el-popover trigger="hover" placement="top">
-                            <p>姓名: {{ scope.row.username }}</p>
-                            <p>密码: {{ scope.row.password }}</p>
-                            <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium">{{ scope.row.password }}</el-tag>
-                            </div>
-                        </el-popover>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="scope">
-                        <el-button
-                                size="mini" type="success"
-                                @click="handleExam( scope.row)">转到形考
-                        </el-button>
+    <div id="container">
+        <el-row :gutter="20">
+            <el-col>
+                <template>
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%"
+                            max-height="250"
+                    >
+                        <el-table-column
+                                label="用户名"
+                                width="180">
+                            <template slot-scope="scope">
+                                <i class="el-icon-user"></i>
+                                <span style="margin-left: 10px">{{ scope.row.username }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="密码"
+                                width="180">
+                            <template slot-scope="scope">
+                                <el-popover trigger="hover" placement="top">
+                                    <p>姓名: {{ scope.row.username }}</p>
+                                    <p>密码: {{ scope.row.password }}</p>
+                                    <div slot="reference" class="name-wrapper">
+                                        <el-tag size="medium">{{ scope.row.password }}</el-tag>
+                                    </div>
+                                </el-popover>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button
+                                        size="mini" type="success"
+                                        @click="handleExam( scope.row)">转到形考
+                                </el-button>
 
-                    </template>
-                </el-table-column>
-            </el-table>
-        </template>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </el-col>
+            <el-col>
+                <template>
+                    <el-button>hello</el-button>
+                </template>
+            </el-col>
+        </el-row>
     </div>
 </div>
 
@@ -65,17 +74,17 @@
         el: '#app',
         data() {
             return {
-                tableData:[]
+                tableData: []
             }
         },
         mounted() {
             require('electron').ipcRenderer.on('ping', (event, message) => {
-                this.tableData=message;
+                this.tableData = message;
             });
         },
         methods: {
-            handleExam( row) {
-                require('electron').ipcRenderer.send('ping',row);
+            handleExam(row) {
+                require('electron').ipcRenderer.send('ping', row);
             },
         }
     })

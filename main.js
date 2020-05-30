@@ -20,7 +20,7 @@ function createWindow() {
 
     // browserview
     let view = new BrowserView()
-    mainWindow.setBrowserView(view)
+  //  mainWindow.setBrowserView(view)
     view.setBounds({ x: 0, y: 290, width: 800, height: 500 })
     view.webContents.loadURL('http://passport.ouchn.cn/Account/Login').then(()=>{})
 
@@ -54,6 +54,7 @@ function createWindow() {
         //     "window.location.href='http://passport.ouchn.cn/Account/Login'").then(()=>{})
 
     })
+    ipcMain.on('exe')
 }
 
 
